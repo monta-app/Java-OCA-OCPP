@@ -25,37 +25,44 @@ package eu.chargetime.ocpp;
    SOFTWARE.
 */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class WebSocketReceiver implements Receiver {
 
-  private RadioEvents handler;
-  private WebSocketReceiverEvents receiverEvents;
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketReceiver.class);
 
-  public WebSocketReceiver(WebSocketReceiverEvents handler) {
-    receiverEvents = handler;
-  }
+    private RadioEvents handler;
+    private WebSocketReceiverEvents receiverEvents;
 
-  @Override
-  public void disconnect() {
-    receiverEvents.close();
-    handler.disconnected();
-  }
+    public WebSocketReceiver(WebSocketReceiverEvents handler) {
+        receiverEvents = handler;
+    }
 
-  void relay(String message) {
-    handler.receivedMessage(message);
-  }
+    @Override
+    public void disconnect() {
+        receiverEvents.close();
+        handler.disconnected();
+    }
 
-  @Override
-  public void send(Object message) {
-    receiverEvents.relay(message.toString());
-  }
+    void relay(String message) {
+        logger.info("relay message={}", message);
+        handler.receivedMessage(message);
+    }
 
-  @Override
-  public boolean isClosed() {
-    return receiverEvents.isClosed();
-  }
+    @Override
+    public void send(Object message) {
+        logger.info("send message={}", message);
+        receiverEvents.relay(message.toString());
+    }
 
-  @Override
-  public void accept(RadioEvents events) {
-    handler = events;
-  }
+    @Override
+    public boolean isClosed() {
+        return receiverEvents.isClosed();
+    }
+
+    @Override
+    public void accept(RadioEvents events) {
+        handler = events;
+    }
 }
