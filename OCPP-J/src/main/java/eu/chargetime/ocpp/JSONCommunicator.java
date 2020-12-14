@@ -1,14 +1,25 @@
 package eu.chargetime.ocpp;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import eu.chargetime.ocpp.model.CallErrorMessage;
 import eu.chargetime.ocpp.model.CallMessage;
 import eu.chargetime.ocpp.model.CallResultMessage;
 import eu.chargetime.ocpp.model.Message;
-import java.lang.reflect.Type;
-import java.time.ZonedDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Type;
+import java.time.ZonedDateTime;
 
 /*
 ChargeTime.eu - Java-OCA-OCPP
@@ -79,9 +90,10 @@ public class JSONCommunicator extends Communicator {
   private class ZonedDateTimeSerializer implements JsonSerializer<ZonedDateTime> {
 
     @Override
-    public JsonElement serialize(
-        ZonedDateTime zonedDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
-      return new JsonPrimitive(zonedDateTime.toOffsetDateTime().toString());
+    public JsonElement serialize(ZonedDateTime zonedDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
+      String dateString = zonedDateTime.toOffsetDateTime().toString();
+      logger.info("serialize dateString={}", dateString);
+      return new JsonPrimitive(dateString);
     }
   }
 
