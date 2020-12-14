@@ -90,6 +90,7 @@ public class JSONCommunicator extends Communicator {
   }
 
   private class ZonedDateTimeSerializer implements JsonSerializer<ZonedDateTime> {
+
     @Override
     public JsonElement serialize(ZonedDateTime zonedDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
       String dateString = DateTimeFormatter.ISO_INSTANT.format(zonedDateTime.truncatedTo(ChronoUnit.SECONDS));
@@ -98,6 +99,7 @@ public class JSONCommunicator extends Communicator {
   }
 
   public class ZonedDateTimeDeserializer implements JsonDeserializer<ZonedDateTime> {
+
     @Override
     public ZonedDateTime deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
       return ZonedDateTime.parse(jsonElement.getAsJsonPrimitive().getAsString());
