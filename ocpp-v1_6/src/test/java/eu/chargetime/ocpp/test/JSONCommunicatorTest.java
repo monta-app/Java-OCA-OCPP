@@ -89,10 +89,10 @@ public class JSONCommunicatorTest {
   @Test
   public void unpackPayload_aCalendarPayload_returnsTestModelWithACalendar() throws Exception {
     // Given
-    String aCalendar = "2016-04-28T07:16:11.988Z";
+    String aCalendar = "2016-04-28T07:16:11Z";
     String payload = "{\"calendarTest\":\"%s\"}";
 
-    ZonedDateTime someDate = ZonedDateTime.parse("2016-04-28T07:16:11.988Z");
+    ZonedDateTime someDate = ZonedDateTime.parse("2016-04-28T07:16:11Z");
 
     // When
     TestModel model =
@@ -243,8 +243,8 @@ public class JSONCommunicatorTest {
   public void unpackPayload_bootNotificationCallResultPayload_returnBootNotificationConfirmation()
       throws Exception {
     // Given
-    String currentTime = "2016-04-28T07:16:11.988Z";
-    ZonedDateTime someDate = ZonedDateTime.parse("2016-04-28T07:16:11.988Z");
+    String currentTime = "2016-04-28T07:16:11Z";
+    ZonedDateTime someDate = ZonedDateTime.parse("2016-04-28T07:16:11Z");
 
     int interval = 300;
     RegistrationStatus status = RegistrationStatus.Accepted;
@@ -281,7 +281,7 @@ public class JSONCommunicatorTest {
       throws Exception {
     // Given
     String expected =
-        "{\"currentTime\":\"2016-04-28T06:41:13.720Z\",\"interval\":300,\"status\":\"Accepted\"}";
+        "{\"currentTime\":\"2016-04-28T06:41:13Z\",\"interval\":300,\"status\":\"Accepted\"}";
     BootNotificationConfirmation confirmation = new BootNotificationConfirmation();
     confirmation.setCurrentTime(createDateTimeInMillis(1461825673720L));
     confirmation.setInterval(300);
