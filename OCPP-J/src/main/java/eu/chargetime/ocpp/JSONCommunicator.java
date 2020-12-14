@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 /*
 ChargeTime.eu - Java-OCA-OCPP
@@ -88,21 +90,16 @@ public class JSONCommunicator extends Communicator {
   }
 
   private class ZonedDateTimeSerializer implements JsonSerializer<ZonedDateTime> {
-
     @Override
     public JsonElement serialize(ZonedDateTime zonedDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
-      String dateString = zonedDateTime.toOffsetDateTime().toString();
-      logger.info("serialize dateString={}", dateString);
+      String dateString = DateTimeFormatter.ISO_INSTANT.format(zonedDateTime.truncatedTo(ChronoUnit.SECONDS));
       return new JsonPrimitive(dateString);
     }
   }
 
   public class ZonedDateTimeDeserializer implements JsonDeserializer<ZonedDateTime> {
-
     @Override
-    public ZonedDateTime deserialize(
-        JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext)
-        throws JsonParseException {
+    public ZonedDateTime deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
       return ZonedDateTime.parse(jsonElement.getAsJsonPrimitive().getAsString());
     }
   }
