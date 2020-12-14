@@ -9,7 +9,6 @@ import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,8 +82,9 @@ public class JSONCommunicator extends Communicator {
 
     @Override
     public JsonElement serialize(
-            ZonedDateTime zonedDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
-      String dateString = DateTimeFormatter.ISO_INSTANT.format(zonedDateTime.truncatedTo(ChronoUnit.SECONDS));
+        ZonedDateTime zonedDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
+      String dateString =
+          DateTimeFormatter.ISO_INSTANT.format(zonedDateTime.truncatedTo(ChronoUnit.SECONDS));
       return new JsonPrimitive(dateString);
     }
   }
@@ -93,8 +93,8 @@ public class JSONCommunicator extends Communicator {
 
     @Override
     public ZonedDateTime deserialize(
-            JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext)
-            throws JsonParseException {
+        JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext)
+        throws JsonParseException {
       return ZonedDateTime.parse(jsonElement.getAsJsonPrimitive().getAsString());
     }
   }
@@ -127,7 +127,7 @@ public class JSONCommunicator extends Communicator {
 
   @Override
   protected Object makeCallError(
-          String uniqueId, String action, String errorCode, String errorDescription) {
+      String uniqueId, String action, String errorCode, String errorDescription) {
     return String.format(CALLERROR_FORMAT, uniqueId, errorCode, errorDescription, "{}");
   }
 
@@ -148,7 +148,7 @@ public class JSONCommunicator extends Communicator {
       message = new CallErrorMessage();
       ((CallErrorMessage) message).setErrorCode(array.get(INDEX_CALLERROR_ERRORCODE).getAsString());
       ((CallErrorMessage) message)
-              .setErrorDescription(array.get(INDEX_CALLERROR_DESCRIPTION).getAsString());
+          .setErrorDescription(array.get(INDEX_CALLERROR_DESCRIPTION).getAsString());
       ((CallErrorMessage) message).setRawPayload(array.get(INDEX_CALLERROR_PAYLOAD).toString());
     } else {
       logger.error("Unknown message type of message: {}", json.toString());
