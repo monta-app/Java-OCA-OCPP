@@ -88,7 +88,6 @@ public class WebSocketTransmitter implements Transmitter {
 
             @Override
             public void onMessage(String message) {
-                logger.info("onMessage message={}", message);
                 events.receivedMessage(message);
             }
 
@@ -165,7 +164,6 @@ public class WebSocketTransmitter implements Transmitter {
 
     @Override
     public void send(Object request) throws NotConnectedException {
-        logger.info("send request={}", request);
         if (client == null) {
             throw new NotConnectedException();
         }

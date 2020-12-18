@@ -46,13 +46,11 @@ public class WebSocketReceiver implements Receiver {
     }
 
     void relay(String message) {
-        logger.info("relay message={}", message);
         handler.receivedMessage(message);
     }
 
     @Override
     public void send(Object message) {
-        logger.info("send message={}", message);
         receiverEvents.relay(message.toString());
     }
 
