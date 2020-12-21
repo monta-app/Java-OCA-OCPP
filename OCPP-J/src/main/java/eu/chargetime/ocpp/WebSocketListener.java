@@ -140,12 +140,9 @@ public class WebSocketListener implements Listener {
                     : "not defined (webSocket is null)";
 
             if (ex instanceof ConnectException) {
-              logger.error(
-                  "On error (resource descriptor: " + resourceDescriptor + ") triggered caused by:",
-                  ex);
+              logger.error("On error (resource descriptor: " + resourceDescriptor + ") triggered caused by:", ex);
             } else {
-              logger.error(
-                  "On error (resource descriptor: " + resourceDescriptor + ") triggered:", ex);
+              logger.error("On error (resource descriptor: " + resourceDescriptor + ") triggered:", ex);
             }
           }
 
